@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String         @id @default(cuid())
+  email        String         @unique
+  name         String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  active       Boolean        @default(true)
+  roles        Role[]
+  RolesOnUsers RolesOnUsers[]
+
+  @@map("users")
+}
+
+model Role {
+  id           String         @id @default(cuid())
+  name         RoleEnum       @unique
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
+  active       Boolean        @default(true)
+  users        User[]
+  RolesOnUsers RolesOnUsers[]
+
+  @@map("roles")
+}
+
+enum RoleEnum {
+  ADMIN
+  USER
+}
+
+model RolesOnUsers {
+  id        Int      @default(autoincrement())
+  role      Role     @relation(fields: [roleId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  active    Boolean  @default(true)
+
+  @@id([userId, roleId, id])
+  @@index([userId])
+  @@index([roleId])
+  @@map("roles_on_users")
+}
