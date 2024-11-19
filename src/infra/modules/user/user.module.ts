@@ -3,9 +3,8 @@ import { UserController } from './user.controller';
 import { UserRepositoryPrisma } from 'src/infra/database/prisma/user-prisma.repository';
 import { RegisterUseCase } from 'src/application/usecase/register.usecase';
 import { IUserRepository } from 'src/application/interface/user.repository';
-import { UserUtils } from './utils/user.utils';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { RegisterRoleUseCase } from 'src/application/usecase/register-role.usecase';
+import { UserUtils } from './user.utils';
 
 @Module({
   imports: [],
@@ -16,12 +15,6 @@ import { RegisterRoleUseCase } from 'src/application/usecase/register-role.useca
       provide: RegisterUseCase,
       useFactory: (userRepository: IUserRepository) =>
         new RegisterUseCase(userRepository),
-      inject: ['IUserRepository'],
-    },
-    {
-      provide: RegisterRoleUseCase,
-      useFactory: (userRepository: IUserRepository) =>
-        new RegisterRoleUseCase(userRepository),
       inject: ['IUserRepository'],
     },
     {

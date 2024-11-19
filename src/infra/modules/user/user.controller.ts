@@ -1,16 +1,15 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ApiBody, ApiResponse } from '@nestjs/swagger';
-import { RegisterRoleUseCase } from 'src/application/usecase/register-role.usecase';
+
 import { RegisterUseCase } from 'src/application/usecase/register.usecase';
 import { UserRequestDTO } from './dto/user-request.dto';
-import { UserUtils } from './utils/user.utils';
+import { UserUtils } from './user.utils';
 
 @Controller('users')
 export class UserController {
   constructor(
     private readonly userUtils: UserUtils,
     private readonly registerUseCase: RegisterUseCase,
-    private readonly registerRoleUseCase: RegisterRoleUseCase,
   ) {}
 
   @Post()

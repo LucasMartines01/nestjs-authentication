@@ -22,20 +22,4 @@ export class UserRepositoryPrisma implements IUserRepository {
       },
     });
   }
-
-  async getRoles(): Promise<RoleEntity[]> {
-    var result = (await this.prisma.role.findMany()).map((role) =>
-      RoleEntity.create(role),
-    );
-
-    return result;
-  }
-
-  async createRole(role: RoleEntity): Promise<void> {
-    await this.prisma.role.create({
-      data: {
-        name: role.name,
-      },
-    });
-  }
 }
