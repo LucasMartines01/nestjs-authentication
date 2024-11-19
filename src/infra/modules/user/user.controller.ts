@@ -1,11 +1,9 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiBody, ApiResponse } from '@nestjs/swagger';
+import { RegisterRoleUseCase } from 'src/application/usecase/register-role.usecase';
 import { RegisterUseCase } from 'src/application/usecase/register.usecase';
 import { UserRequestDTO } from './dto/user-request.dto';
 import { UserUtils } from './utils/user.utils';
-import { ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { RegisterRoleUseCase } from 'src/application/usecase/register-role.usecase';
-import { RoleEnum } from 'src/domain/role.enum';
-import UserRoleRequestDTO from './dto/user-role-request.dto';
 
 @Controller('users')
 export class UserController {
