@@ -27,17 +27,4 @@ export class UserController {
   async register(@Body() data: UserRequestDTO): Promise<void> {
     await this.registerUseCase.execute(this.userUtils.userToDomain(data));
   }
-
-  @Post('roles')
-  @ApiResponse({ status: 201, description: 'User created' })
-  @ApiResponse({ status: 400, description: 'Bad Request' })
-  @ApiResponse({ status: 500, description: 'Internal Server Error' })
-  @ApiResponse({ status: 409, description: 'Conflict' })
-  @ApiBody({
-    description: 'Role data',
-    type: UserRoleRequestDTO,
-  })
-  async registerNewRole(@Body() data: UserRoleRequestDTO): Promise<void> {
-    await this.registerRoleUseCase.execute(this.userUtils.toRoleDomain(data));
-  }
 }

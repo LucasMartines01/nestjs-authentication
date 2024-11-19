@@ -8,11 +8,7 @@ import UserRoleRequestDTO from '../dto/user-role-request.dto';
 @Injectable()
 export class UserUtils {
   constructor() {}
-
-  public async generateRandomPassword(): Promise<string> {
-    return Math.random().toString(36).slice(-8);
-  }
-
+  
   public userToDomain(data: UserRequestDTO): UserEntity {
     return UserEntity.create({
       name: data.name,
