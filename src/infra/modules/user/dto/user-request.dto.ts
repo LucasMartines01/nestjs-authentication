@@ -7,7 +7,7 @@ export class UserRequestDTO {
   name: string;
   @IsNotEmpty()
   @IsEmail()
-  @ApiProperty({ example: 'email@example.com'})
+  @ApiProperty({ example: 'email@example.com' })
   email: string;
   @MinLength(6)
   @IsNotEmpty()

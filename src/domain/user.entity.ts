@@ -1,5 +1,5 @@
 import BusinessRuleException from './errors/business-rule.exception';
-import RoleEntity from './role.entity';
+import { RoleEnum } from './role.enum';
 
 export default class UserEntity {
   id?: string;
@@ -9,7 +9,7 @@ export default class UserEntity {
   createdAt?: Date;
   updatedAt?: Date;
   active?: boolean;
-  roles: RoleEntity[];
+  roles: RoleEnum[];
 
   private constructor(data: Partial<UserEntity>) {
     Object.assign(this, data);
@@ -43,15 +43,15 @@ export default class UserEntity {
     }
   }
 
-  removeRole(role: RoleEntity): void {
-    const index = this.roles.findIndex((r) => r.id === role.id);
+  removeRole(role: RoleEnum): void {
+    const index = this.roles.findIndex((r) => r === role);
     if (index !== -1) {
       this.roles.splice(index, 1);
     }
   }
 
-  hasRole(role: RoleEntity): boolean {
-    return this.roles.some((r) => r.id === role.id);
+  hasRole(role: RoleEnum): boolean {
+    return this.roles.some((r) => r === role);
   }
 
   changeActiveStatus(): void {

@@ -7,20 +7,19 @@ import RoleEntity from 'src/domain/role.entity';
 @Injectable()
 export class UserRepositoryPrisma implements IUserRepository {
   constructor(private readonly prisma: PrismaService) {}
-
   async getAll(): Promise<UserEntity[]> {
     return (await this.prisma.user.findMany()).map((user) =>
       UserEntity.create(user),
     );
   }
   async register(user: UserEntity): Promise<void> {
-    await this.prisma.user.create({ 
+    await this.prisma.user.create({
       data: {
         ...user,
         roles: {
-          connect: user.roles.map(role => ({ id: role.id }))
-        }
-      }
+          connect: user.roles.map((role) => ({ name: role })),
+        },
+      },
     });
   }
 
@@ -30,5 +29,13 @@ export class UserRepositoryPrisma implements IUserRepository {
     );
 
     return result;
+  }
+
+  async createRole(role: RoleEntity): Promise<void> {
+    await this.prisma.role.create({
+      data: {
+        name: role.name,
+      },
+    });
   }
 }
