@@ -3,7 +3,8 @@ import { ApiBody, ApiResponse } from '@nestjs/swagger';
 
 import { RegisterUseCase } from 'src/application/usecase/register.usecase';
 import { UserRequestDTO } from './dto/user-request.dto';
-import { UserUtils } from './user.utils';
+import { PasswordHashPipe } from 'src/infra/pipes/password-hash.pipe';
+import { UserUtils } from './utils/user.utils';
 
 @Controller('users')
 export class UserController {
@@ -21,7 +22,7 @@ export class UserController {
     description: 'User data',
     type: UserRequestDTO,
   })
-  async register(@Body() data: UserRequestDTO): Promise<void> {
+  async register(@Body(PasswordHashPipe) data: UserRequestDTO): Promise<void> {
     await this.registerUseCase.execute(this.userUtils.userToDomain(data));
   }
 }

@@ -16,23 +16,8 @@ export default class UserEntity {
   }
 
   static create(data: Partial<UserEntity>): UserEntity {
-    this.validateName(data.name);
-    this.validateEmail(data.email);
     this.validatePassword(data.password);
     return new UserEntity(data);
-  }
-
-  private static validateName(name?: string): void {
-    if (!name || name.trim().length === 0) {
-      throw new BusinessRuleException('Name is required and cannot be empty.');
-    }
-  }
-
-  private static validateEmail(email?: string): void {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-      throw new BusinessRuleException('Invalid email format.');
-    }
   }
 
   private static validatePassword(password?: string): void {

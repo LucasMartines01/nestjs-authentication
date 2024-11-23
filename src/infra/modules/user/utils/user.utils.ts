@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { UserRequestDTO } from '../dto/user-request.dto';
-import UserEntity from 'src/domain/user.entity';
-import RoleEntity from 'src/domain/role.entity';
 import { RoleEnum } from 'src/domain/role.enum';
-import UserRoleRequestDTO from '../dto/user-role-request.dto';
+import UserEntity from 'src/domain/user.entity';
+import { UserRequestDTO } from '../dto/user-request.dto';
 
 @Injectable()
 export class UserUtils {
@@ -15,12 +13,6 @@ export class UserUtils {
       email: data.email,
       password: data.password,
       roles: [RoleEnum.USER],
-    });
-  }
-
-  toRoleDomain(data: UserRoleRequestDTO): RoleEntity {
-    return RoleEntity.create({
-      name: data.role,
     });
   }
 }

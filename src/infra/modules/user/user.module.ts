@@ -4,7 +4,7 @@ import { UserRepositoryPrisma } from 'src/infra/database/prisma/user-prisma.repo
 import { RegisterUseCase } from 'src/application/usecase/register.usecase';
 import { IUserRepository } from 'src/application/interface/user.repository';
 import { PrismaService } from 'src/infra/database/prisma/prisma.service';
-import { UserUtils } from './user.utils';
+import { UserUtils } from './utils/user.utils';
 
 @Module({
   imports: [],
