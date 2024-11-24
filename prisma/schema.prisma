@@ -46,7 +46,6 @@ model RolesOnUsers {
   roleId    Int
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-  active    Boolean  @default(true)
 
   @@id([userId, roleId, id])
   @@index([userId])

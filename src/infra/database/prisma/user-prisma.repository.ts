@@ -1,15 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { IUserRepository } from 'src/application/interface/user.repository';
 import UserEntity from 'src/domain/user.entity';
 import { PrismaService } from './prisma.service';
+import { RoleEnum } from 'src/domain/role.enum';
 
 @Injectable()
-export class UserRepositoryPrisma implements IUserRepository {
+export class UserRepository {
   constructor(private readonly prisma: PrismaService) {}
-  
+
   async getAll(): Promise<UserEntity[]> {
-    return (await this.prisma.user.findMany()).map((user) =>
-      UserEntity.create(user),
+    const users = await this.prisma.user.findMany({
+      include: {
+        roles: true,
+      },
+    });
+
+    return users.map((user) =>
+      UserEntity.create({
+        ...user,
+        roles: user.roles.map((role) => RoleEnum[role.name]),
+      }),
     );
   }
 
@@ -22,5 +31,19 @@ export class UserRepositoryPrisma implements IUserRepository {
         },
       },
     });
+  }
+
+  async getUserByEmail(email: string): Promise<UserEntity> {
+    return UserEntity.create(
+      await this.prisma.user.findUnique({
+        where: {
+          email,
+        },
+      }),
+    );
+  }
+
+  async verifyIfUserExists(email: string): Promise<boolean> {
+    return Boolean(await this.prisma.user.findUnique({ where: { email } }));
   }
 }

@@ -1,8 +1,8 @@
 import UserEntity from 'src/domain/user.entity';
-import { IUserRepository } from '../interface/user.repository';
+import { IUserGateway } from '../interface/user.gateway';
 
-export class GetAllUseCase {
-  constructor(private readonly userRepository: IUserRepository) {}
+export class GetAllUsersUseCase {
+  constructor(private readonly userRepository: IUserGateway) {}
   async execute(): Promise<UserEntity[]> {
     return await this.userRepository.getAll();
   }

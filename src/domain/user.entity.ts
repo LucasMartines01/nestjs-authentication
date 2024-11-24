@@ -1,4 +1,4 @@
-import BusinessRuleException from './errors/business-rule.exception';
+
 import { RoleEnum } from './role.enum';
 
 export default class UserEntity {
@@ -16,16 +16,7 @@ export default class UserEntity {
   }
 
   static create(data: Partial<UserEntity>): UserEntity {
-    this.validatePassword(data.password);
     return new UserEntity(data);
-  }
-
-  private static validatePassword(password?: string): void {
-    if (!password || password.length < 6) {
-      throw new BusinessRuleException(
-        'Password must be at least 6 characters long.',
-      );
-    }
   }
 
   removeRole(role: RoleEnum): void {
